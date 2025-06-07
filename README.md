@@ -1,6 +1,6 @@
 # Cloudtechnologie Demo (2025-SS)
 
-In dieser kurzen Demo werde ich ein lokales K3s Kubernetes Cluster mithilfe von Vagrant und Ansible installieren. Als Provisiioner für die virtuellen Maschinen verwende ich Parallels Desktop.
+In dieser kurzen Demo werde ich ein lokales K3s Kubernetes Cluster mithilfe von Vagrant und Ansible installieren. Als Provisioner für die virtuellen Maschinen verwende ich Parallels Desktop.
 
 Am Ende dieser Demo haben wir ein kleines Kubernetes Cluster installiert, welches aus einer Control Plane Node und zwei Worker Nodes besteht. Die Installation weiterer Control Plane Nodes macht es komplexer und wird deshalb nicht gezeigt.
 

@@ -1,0 +1,6 @@
+[server]
+k3s-01 ansible_host=10.40.0.11 ansible_user=ansible
+
+[agent]
+k3s-02 ansible_host=10.40.0.12 ansible_user=ansible
+k3s-03 ansible_host=10.40.0.13 ansible_user=ansible

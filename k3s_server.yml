@@ -1,0 +1,13 @@
+---
+- name: Setup k3s server
+  hosts: server
+  gather_facts: false
+
+  tasks:
+    - name: Include k3s server role
+      ansible.builtin.include_role:
+        name: k3s_server
+
+    - name: Include metallb role
+      ansible.builtin.include_role:
+        name: metallb

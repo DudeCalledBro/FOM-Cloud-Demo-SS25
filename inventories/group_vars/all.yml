@@ -1,0 +1,7 @@
+---
+# Define K3s Install Script URL
+k3s_install_url: https://get.k3s.io
+
+# Define MetalLB Pool
+metallb_pool:
+  - 10.40.0.20-10.40.0.30

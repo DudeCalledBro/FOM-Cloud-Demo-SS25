@@ -1,0 +1,9 @@
+# ignore vagrant
+.vagrant
+
+# ignore common
+.DS_Store
+*.retry
+*/__pycache__
+*.pyc
+.cache

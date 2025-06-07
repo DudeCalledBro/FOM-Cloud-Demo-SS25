@@ -1,0 +1,22 @@
+---
+- name: Create metallb manifests directory
+  ansible.builtin.file:
+    path: "{{ metallb_manifest_path }}"
+    mode: '0755'
+    state: directory
+
+- name: Create metallb helmchart deployment
+  ansible.builtin.template:
+    src: metallb.yaml.j2
+    dest: "{{ metallb_manifest_path }}/metallb.yaml"
+    mode: '0644'
+    trim_blocks: false
+  notify: update metallb
+
+- name: Create metallb pool configuration
+  ansible.builtin.template:
+    src: pool.yaml.j2
+    dest: "{{ metallb_manifest_path }}/pool.yaml"
+    mode: '0644'
+    trim_blocks: false
+  notify: update metallb

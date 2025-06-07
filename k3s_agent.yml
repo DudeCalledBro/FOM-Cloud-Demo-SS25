@@ -1,0 +1,9 @@
+---
+- name: Setup k3s agent
+  hosts: agent
+  gather_facts: false
+
+  tasks:
+    - name: Include k3s agent role
+      ansible.builtin.include_role:
+        name: k3s_agent

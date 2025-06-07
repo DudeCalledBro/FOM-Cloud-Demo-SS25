@@ -1,0 +1,3 @@
+---
+# Define K3s Install Script URL
+k3s_install_url: https://get.k3s.io

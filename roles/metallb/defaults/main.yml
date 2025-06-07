@@ -1,0 +1,6 @@
+---
+# Define MetalLB Address Pool
+metallb_pool: []
+
+# Define MetalLB Manifest Directory
+metallb_manifest_path: ~/metallb

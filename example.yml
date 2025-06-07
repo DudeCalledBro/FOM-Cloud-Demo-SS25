@@ -1,0 +1,74 @@
+---
+- name: Prepare Deployment Example
+  hosts: server
+  gather_facts: false
+
+  pre_tasks:
+    - name: Create Demo Directory
+      ansible.builtin.file:
+        path: /home/vagrant/fom-demo
+        owner: vagrant
+        group: vagrant
+        mode: '0755'
+        state: directory
+
+  tasks:
+    - name: Create Demo Namespace
+      ansible.builtin.copy:
+        dest: /home/vagrant/fom-demo/01_namespace.yaml
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+        content: |
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: fom
+
+    - name: Create Demo Deployment
+      ansible.builtin.copy:
+        dest: /home/vagrant/fom-demo/02_deployment.yaml
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+        content: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: nginx
+            namespace: fom
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: nginx
+            template:
+              metadata:
+                labels:
+                  app: nginx
+              spec:
+                containers:
+                  - name: nginx
+                    image: nginx:alpine
+                    ports:
+                      - containerPort: 80
+
+    - name: Create Demo Service
+      ansible.builtin.copy:
+        dest: /home/vagrant/fom-demo/03_service.yaml
+        owner: vagrant
+        group: vagrant
+        mode: '0644'
+        content: |
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: nginx
+            namespace: fom
+          spec:
+            selector:
+              app: nginx
+            type: LoadBalancer
+            ports:
+              - port: 80
+                targetPort: 80

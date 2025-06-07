@@ -1,0 +1,9 @@
+---
+- name: Update metallb deployment configuration
+  ansible.builtin.command:
+    cmd: "kubectl apply -f {{ metallb_manifest_path }}"
+  register: _status
+  until: _status is success
+  retries: 300
+  changed_when: true
+  listen: update metallb

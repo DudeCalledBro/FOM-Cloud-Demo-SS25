@@ -1,0 +1,56 @@
+---
+- name: Prepare Remote Host
+  hosts: all
+  gather_facts: false
+
+  pre_tasks:
+    - name: Update Virtual Machine
+      ansible.builtin.apt:
+        upgrade: true
+        update_cache: true
+      changed_when: false
+
+    - name: Install Tools
+      ansible.builtin.apt:
+        name:
+          - vim
+          - htop
+        state: present
+
+  tasks:
+    - name: Setup Ansible User Group
+      ansible.builtin.group:
+        name: ansible
+        state: present
+
+    - name: Setup Ansible User
+      ansible.builtin.user:
+        name: ansible
+        group: ansible
+        groups:
+          - sudo
+          - users
+        state: present
+        shell: /bin/bash
+
+    - name: Setup Ansible Sudoers
+      ansible.builtin.copy:
+        content: "%ansible ALL=(ALL) NOPASSWD:ALL"
+        dest: /etc/sudoers.d/98_ansible
+        owner: root
+        group: root
+        mode: '0440'
+
+    - name: Prepare Ansible SSH Directory
+      ansible.builtin.file:
+        path: /home/ansible/.ssh
+        owner: ansible
+        group: ansible
+        mode: '0755'
+        state: directory
+
+    - name: Setup Ansible Authorized Key
+      ansible.posix.authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_rsa.pub') }}"

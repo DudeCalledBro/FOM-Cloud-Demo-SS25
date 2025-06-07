@@ -1,0 +1,25 @@
+---
+- name: Fetch k3s cluster token
+  ansible.builtin.slurp:
+    path: /var/lib/rancher/k3s/server/node-token
+  delegate_to: k3s-01
+  run_once: true
+  register: _k3s_token
+
+- name: Fetch k3s install script
+  ansible.builtin.uri:
+    url: "{{ k3s_install_url }}"
+    return_content: true
+  delegate_to: localhost
+  run_once: true
+  register: _k3s_script
+
+- name: Install k3s agent
+  ansible.builtin.command:
+    cmd: sh -
+    stdin: "{{ _k3s_script['content'] }}"
+  register: _k3s_status
+  changed_when: "'No change detected' not in _k3s_status.stdout"
+  environment:
+    K3S_URL: https://k3s-01.localdomain:6443
+    K3S_TOKEN: "{{ _k3s_token['content'] | b64decode | trim }}"

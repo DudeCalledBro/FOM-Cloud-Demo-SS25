@@ -66,6 +66,6 @@ kubectl scale -n fom --replicas=3 deployment/nginx
 
 ## License
 
-Copyright © 2024 Niclas Spreng
+Copyright © 2025 Niclas Spreng
 
 Licensed under the [MIT license](LICENSE).
